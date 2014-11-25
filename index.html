@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html ng-app='findADoc'>
+  <head>
+    <title>FindaDoc Demo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="all" />
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="http://getbootstrap.com/examples/cover/cover.css">
+    <link rel="stylesheet" type="text/css" href="lib/ng-modal/ng-modal.css" media="all" />
+    <script type="text/javascript" src="lib/angular/angular.js"></script>
+    <script type="text/javascript" src="lib/ng-modal/ng-modal.js"></script>
+    <script type="text/javascript" src="js/controllers.js"></script>
+    <script type="text/javascript" src="lib/angular/angular-route.js"></script>
+  </head>
+  <body>
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand">VUMC FindADoc Demo</h3>
+              <nav>
+                <ul class="nav masthead-nav">
+                  <li class="active"><a href="#">Home</a></li>
+                  <li><a href="#">About</a></li>
+                  <li><a href="#">Contact</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <div class="inner cover" ng-controller="doctorsController">
+            <h1 class="cover-heading">Find a Doc</h1>
+            <p class="lead">Locate your next Vanderbilt doctor</p>
+            <p class="lead">
+              <a href="#" class="btn btn-lg btn-default" ng-click='toggleModal()'>Search Our Database</a>
+            </p>
+            <modal-dialog show='modalShown' width='80%' height='90%' title='This is a modal'>
+              <div class="main">
+                <img src="http://pazzopinto.files.wordpress.com/2013/01/vb-logo1.gif">
+                <p style="font-size: 46px; color: white; margin-top: 10px;">Doctors Found: <span style="font-size: 60px; color: white;">{{filtered.length}}</span></p>
+                <div class="search">
+                  <h1>Find a Doctor</h1>
+                  <input ng-model="query" placeholder="Search by first or last name or speciality (i.e. cancer or heart)" autofocus></input>
+                  Show:
+                  <select ng-model="query">
+                      <option value=" " selected>All</option>
+                      <option ng-repeat="item in doctors | orderBy: 'speciality' | unique: 'speciality'" value="{{item.speciality}}">{{item.speciality}}</option>
+                  </select>
+                </div>
+                <ul class="doctorslist">
+                  <li class="doctor cf" ng-show="query" ng-repeat="item in filtered = ( doctors | filter: query | orderBy: 'name' )">
+                    <img ng-src="{{item.src}}" alt="Photo of {{item.name}}">
+                    <div class="info">
+                      <h2><a href="{{item.link}}">{{item.name}}</a></h2>
+                      <h3>{{item.location}}</h3>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <a href='{{link}}'>This is a link to {{link}}</a>
+              <p>Shown? {{modalShown}}</p>
+            </modal-dialog>
+            <!-- <button ng-click='toggleModal()'>Toggle Modal</button> -->
+            <br/>
+            <br/>
+            <br/>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+    <script type='text/javascript'>
+      app = angular.module('ngModalDemo', ['ngModal']);
+      app.config(function(ngModalDefaultsProvider) {
+          return ngModalDefaultsProvider.set({
+            closeButtonHtml: "<i class='fa fa-times'></i>"
+          });
+      });
+      app.controller('DemoController', function($scope) {
+          $scope.link = "http://google.com";
+          $scope.modalShown = false;
+          $scope.toggleModal = function() {
+            $scope.modalShown = !$scope.modalShown;
+          };
+      });
+    </script>
+  </body>
+</html>
