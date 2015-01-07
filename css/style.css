@@ -248,7 +248,6 @@ a.small {
 .doctorslist ul {
   margin: 0;
   padding: 0;
-  background: #FDF6E3;
 }
 
 .doctorslist li {
@@ -320,4 +319,11 @@ a.small {
 
 .ng-modal-dialog {
   background-color: black !important;
+}
+
+.info p {
+  line-height: 2.7rem;
+  color: white;
+  margin-bottom: 10px;
+  font-family: 'Merriweather';
 }
