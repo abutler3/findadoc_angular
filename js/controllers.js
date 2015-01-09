@@ -45,10 +45,10 @@ app.controller('doctorsController', ['$scope', '$http', function($scope, $http) 
   $scope.toggleModal = function() {
     $scope.modalShown = !$scope.modalShown;
   };
-  $http.get('css/merged1-20.json').success(function(data, status, headers, config) {
+  $http.get('css/merged1-36.json').success(function(data, status, headers, config) {
     $scope.doctors = data.Provider;
   }).
-  error(function(data, status, headers, confid) {
+  error(function(data, status, headers, config) {
     console.log("Building could not read JSON");
   });
 }]);

@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css" media="all" />
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="http://getbootstrap.com/examples/cover/cover.css">
     <link rel="stylesheet" type="text/css" href="lib/ng-modal/ng-modal.css" media="all" />
     <script type="text/javascript" src="lib/angular/angular.js"></script>
     <script type="text/javascript" src="lib/ng-modal/ng-modal.js"></script>
@@ -46,7 +45,8 @@
                 <!-- <p style="font-size: 46px; color: white; margin-top: 10px;">Doctors Found: <span style="font-size: 60px; color: white;">{{filtered.length}}</span></p> -->
                 <div class="search">
                   <h1>Find a Doctor</h1>
-                  <input ng-model="query" ng-model-options="{ debounce: 1000 }" placeholder="Search by first or last name or speciality (i.e. cancer or heart)" autofocus></input>
+                  <!-- <h3>Total Doctors: {{filtered.length }}</h3> -->
+                  <input ng-model="query" ng-model-options="{ debounce: 2000 }" placeholder="Search by first or last name or speciality (i.e. cancer or heart)" autofocus></input>
                   <!-- Show:
                   <select ng-model="query">
                       <option value=" " selected>All</option>
@@ -54,7 +54,7 @@
                   </select> -->
                 </div>
                 <ul class="doctorslist">
-                  <li class="doctor cf" ng-show="query" bindonce ng-repeat="item in doctors | unique: item.ID | orderBy:'ProviderName.LastName' | filter: query track by item.ID">
+                  <li class="doctor cf" ng-show="query" bindonce ng-repeat="item in doctors | unique: item.ID | orderBy:'ProviderName.LastName' | filter: query | limitTo: 6">
                     <img ng-src="{{item.ImageUrl}}" alt="Photo of {{item.ProviderName.LastName}}" err-src="icon-main-doctor.jpg">
                     <div class="info">
                       <h2><a target="_blank" bo-href="http://www.vanderbilthealth.com/main/findadoc?LastName={{item.ProviderName.LastName}}&FirstName={{item.ProviderName.FirstName}}">{{item.ProviderName.FirstName}} {{item.ProviderName.LastName}}</a></h2>
