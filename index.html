@@ -46,15 +46,20 @@
                 <div class="search">
                   <h1>Find a Doctor</h1>
                   <!-- <h3>Total Doctors: {{filtered.length }}</h3> -->
-                  <input ng-model="query" ng-model-options="{ debounce: 2000 }" placeholder="Search by first or last name or speciality (i.e. cancer or heart)" autofocus></input>
+                  <input ng-model="query" ng-model-options="{ debounce: 2000 }" placeholder="Search by first or last name or speciality (i.e. cancer or heart)" autofocus style="margin-bottom: 20px;"></input>
+                  <button ng-click="toggle = !toggle" style="color: black; margin-right: 20px;">Toggle!</button>
+                  <button ng-click="filter = !filter" style="color: black;">Filter</button>
+                  <div ng-show="filter">
+                    <p>Test</p>
+                  </div>
                   <!-- Show:
                   <select ng-model="query">
                       <option value=" " selected>All</option>
                       <option ng-repeat="item in doctors | orderBy: 'speciality' | unique: 'speciality'" value="{{item.speciality}}">{{item.speciality}}</option>
                   </select> -->
                 </div>
-                <ul class="doctorslist">
-                  <li class="doctor cf" ng-show="query" bindonce ng-repeat="item in doctors | unique: item.ID | orderBy:'ProviderName.LastName' | filter: query | limitTo: 6">
+                <ul class="doctorslist" ng-show="toggle">
+                  <li class="doctor cf" bindonce ng-repeat="item in doctors | unique: item.ID | orderBy:'ProviderName.LastName' | filter: query | limitTo: 6">
                     <img ng-src="{{item.ImageUrl}}" alt="Photo of {{item.ProviderName.LastName}}" err-src="icon-main-doctor.jpg">
                     <div class="info">
                       <h2><a target="_blank" bo-href="http://www.vanderbilthealth.com/main/findadoc?LastName={{item.ProviderName.LastName}}&FirstName={{item.ProviderName.FirstName}}">{{item.ProviderName.FirstName}} {{item.ProviderName.LastName}}</a></h2>
