@@ -42,6 +42,10 @@ app.directive('errSrc', function() {
 app.controller('doctorsController', ['$scope', '$http', function($scope, $http) {
   $scope.link = "http://google.com";
   $scope.modalShown = false;
+  $scope.modalShownFromFrontForm = false;
+  $scope.frontToggleModal = function() {
+    $scope.modalShownFromFrontForm = !$scope.modalShownFromFrontForm;
+  };
   $scope.toggleModal = function() {
     $scope.modalShown = !$scope.modalShown;
   };
@@ -51,4 +55,7 @@ app.controller('doctorsController', ['$scope', '$http', function($scope, $http) 
   error(function(data, status, headers, config) {
     console.log("Building could not read JSON");
   });
+  $scope.close = function() {
+    console.log("close");
+  }
 }]);

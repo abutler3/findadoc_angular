@@ -39,7 +39,27 @@
             <p class="lead">
               <a href="#" class="btn btn-lg btn-default" ng-click='toggleModal()'>Search Our Database</a>
             </p>
-            <modal-dialog show='modalShown' width='80%' height='90%' title='This is a modal'>
+            <div class="front_form">
+              <input ng-model="query" ng-model-options="{ debounce: 2000 }" name="LastName" id="doctorNameFieldlast" type="text" style="color: black;" value="Last Name" />
+              <a href="#" class="btn btn-lg btn-default" ng-click='frontToggleModal()'>Find A Doctor</a>
+            </div>
+            <modal-dialog show='modalShownFromFrontForm' width='80%' height='90%' title='This is the second modal' on-close='close()'>
+              <ul class="doctorslist">
+                <li class="doctor cf" bindonce ng-repeat="item in doctors | unique: item.ID | orderBy:'ProviderName.LastName' | filter: query | limitTo: 6">
+                  <img ng-src="{{item.ImageUrl}}" alt="Photo of {{item.ProviderName.LastName}}" err-src="icon-main-doctor.jpg">
+                  <div class="info">
+                    <h2><a target="_blank" href="http://www.vanderbilthealth.com/main/findadoc?LastName={{item.ProviderName.LastName}}&FirstName={{item.ProviderName.FirstName}}">{{item.ProviderName.FirstName}} {{item.ProviderName.LastName}}</a></h2>
+                    <div ng-if="item.OrganizationsList.ProviderOrganization.length > 0">
+                      <ul ng-repeat="ProviderOrganization in item.OrganizationsList.ProviderOrganization | limitTo: 1">
+                        <li>{{ProviderOrganization.Name}}</li>
+                      </ul>
+                    </div>
+                    <p>{{item.OrganizationsList.ProviderOrganization.Name}}</p>
+                  </div>
+                </li>
+              </ul>
+            </modal-dialog>
+            <modal-dialog show='modalShown' width='80%' height='90%' title='This is a modal' on-close='close()'>
               <div class="main">
                 <img src="http://pazzopinto.files.wordpress.com/2013/01/vb-logo1.gif">
                 <!-- <p style="font-size: 46px; color: white; margin-top: 10px;">Doctors Found: <span style="font-size: 60px; color: white;">{{filtered.length}}</span></p> -->
@@ -47,10 +67,365 @@
                   <h1>Find a Doctor</h1>
                   <!-- <h3>Total Doctors: {{filtered.length }}</h3> -->
                   <input ng-model="query" ng-model-options="{ debounce: 2000 }" placeholder="Search by first or last name or speciality (i.e. cancer or heart)" autofocus style="margin-bottom: 20px;"></input>
-                  <button ng-click="toggle = !toggle" style="color: black; margin-right: 20px;">Toggle!</button>
-                  <button ng-click="filter = !filter" style="color: black;">Filter</button>
+                  <button class="btn btn-lg btn-default" ng-click="toggle = !toggle" style="color: black; margin-right: 20px;">Toggle!</button>
+                  <button class="btn btn-lg btn-default" ng-click="filter = !filter" style="color: black;">More Options</button>
                   <div ng-show="filter">
-                    <p>Test</p>
+                    <p style="color: white">Test</p>
+                    <form style="color: white">
+                    <select name="specialty" id="speedDocs" class="form-control" style="color: white;">
+                      <option>All Specialties</option>
+                      <option id="5412" value="5412">Acupuncture</option>
+                      <option id="1" value="1">Allergy and Asthma</option>
+                      <option id="5429" value="5429">Allergy and Immunology</option>
+                      <optgroup label="Anesthesiology">
+                        <option id="2" value="2">All Anesthesiology</option>
+                        <option id="5373" value="5373">Pain Management</option>
+                      </optgroup>
+                      <option id="3" value="3">Burn</option>
+                      <optgroup label="Cancer">
+                        <option id="4" value="4">All Cancer</option>
+                        <option id="5" value="5">Brain/Neuro Cancer</option>
+                        <option id="6" value="6">Breast Cancer</option>
+                        <option id="7" value="7">Endocrine Cancer</option>
+                        <option id="8" value="8">Gastrointestinal Cancer</option>
+                        <option id="9" value="9">Gynecologic Cancer</option>
+                        <option id="10" value="10">Head and Neck Cancer</option>
+                        <option id="11" value="11">Hematologic Cancer</option>
+                        <option id="12" value="12">Lung Cancer</option>
+                        <option id="17" value="17">Medical Oncology</option>
+                        <option id="13" value="13">Melanoma</option>
+                        <option id="18" value="18">Neuro-Oncology</option>
+                        <option id="14" value="14">Non-Melanoma Skin Cancer</option>
+                        <option id="19" value="19">Radiation Oncology</option>
+                        <option id="15" value="15">Sarcoma</option>
+                        <option id="20" value="20">Surgical Oncology</option>
+                        <option id="16" value="16">Urologic/Genitourinary Cancer</option>
+                      </optgroup>
+                      <option id="5377" value="5377">Cardiovascular</option>
+                      <option id="21" value="21">Cosmetic Plastic Surgery</option>
+                      <optgroup label="Dental Specialties">
+                        <option id="22" value="22">All Dental Specialties</option>
+                        <option id="23" value="23">General Dentistry</option>
+                        <option id="24" value="24">Oral and Maxillofacial Surgery</option>
+                        <option id="25" value="25">Orthodontics</option>
+                      </optgroup>
+                      <option id="26" value="26">Dermatology</option>
+                      <option id="27" value="27">Diabetes</option>
+                      <option id="28" value="28">Emergency Medicine</option>
+                      <optgroup label="Endocrinology and Metabolism">
+                        <option id="29" value="29">All Endocrinology and Metabolism</option>
+                        <option id="5401" value="5401">Adrenal Gland Disease</option>
+                        <option id="30" value="30">Diabetes</option>
+                        <option id="31" value="31">Pituitary Disorders</option>
+                      </optgroup>
+                      <option id="32" value="32">Family Medicine</option>
+                      <option id="33" value="33">Gastroenterology, Hepatology and Nutrition</option>
+                      <option id="34" value="34">Genetics</option>
+                      <option id="5406" value="5406">Geriatric Medicine</option>
+                      <option id="35" value="35">Gynecology</option>
+                      <option id="36" value="36">Hearing and Speech</option>
+                      <optgroup label="Heart and Vascular">
+                        <option id="37" value="37">All Heart and Vascular</option>
+                        <option id="38" value="38">Adult Congenital Heart Program</option>
+                        <option id="39" value="39">Arrhythmia and Electrophysiology</option>
+                        <option id="40" value="40">Autonomic</option>
+                        <option id="41" value="41">Cardiac MRI</option>
+                        <option id="42" value="42">Cardiac Surgery</option>
+                        <option id="43" value="43">Congestive Heart Failure and Transplant</option>
+                        <option id="44" value="44">General Cardiology</option>
+                        <option id="45" value="45">Interventional Cardiology and Peripheral Vascular Disease</option>
+                        <option id="46" value="46">Prevention Program</option>
+                        <option id="47" value="47">Vascular Surgery and Peripheral Vascular Disease</option>
+                      </optgroup>
+                      <option id="48" value="48">Hematology</option>
+                      <option id="49" value="49">Hematology / Oncology</option>
+                      <option id="7657" value="7657">Hypertension</option>
+                      <option id="50" value="50">Infectious Diseases</option>
+                      <option id="5374" value="5374">Internal Medicine</option>
+                      <option id="51" value="51">Nephrology and Hypertension</option>
+                      <optgroup label="Neurology">
+                        <option id="52" value="52">All Neurology</option>
+                        <option id="5375" value="5375">Electromyography</option>
+                        <option id="5376" value="5376">Vascular Neurology</option>
+                      </optgroup>
+                      <optgroup label="Obstetrics and Gynecology">
+                        <option id="53" value="53">All Obstetrics and Gynecology</option>
+                        <option id="54" value="54">Certified Nurse Midwifery </option>
+                        <option id="55" value="55">Certified Nurse Women's Health</option>
+                        <option id="56" value="56">Gynecologic Oncology</option>
+                        <option id="57" value="57">Gynecology</option>
+                        <option id="58" value="58">Maternal Fetal Medicine</option>
+                        <option id="59" value="59">OB/GYN</option>
+                        <option id="60" value="60">Reproductive Endocrinology and Infertility</option>
+                      </optgroup>
+                      <option id="61" value="61">Occupational Medicine</option>
+                      <option id="62" value="62">Ophthalmology and Visual Sciences</option>
+                      <option id="63" value="63">Oral and Maxillofacial Surgery</option>
+                      <option id="64" value="64">Orthodontics</option>
+                      <optgroup label="Orthopaedics and Rehabilitation">
+                        <option id="65" value="65">All Orthopaedics and Rehabilitation</option>
+                        <option id="66" value="66">Orthopaedic / Soft Tissue Oncology</option>
+                        <option id="67" value="67">Podiatry</option>
+                        <option id="68" value="68">Spine</option>
+                        <option id="69" value="69">Sports Medicine</option>
+                      </optgroup>
+                      <option id="70" value="70">Otolaryngology</option>
+                      <option id="5411" value="5411">Palliative Care</option>
+                      <option id="71" value="71">Pathology</option>
+                      <optgroup label="Pediatric Specialties">
+                        <option id="113" value="113">All Pediatric Specialties</option>
+                        <option id="114" value="114">Adolescent Medicine and Behavioral Science</option>
+                        <option id="115" value="115">Adolescent Sports Medicine</option>
+                        <option id="116" value="116">Child and Adolescent Psychiatry</option>
+                        <option id="117" value="117">Child Development</option>
+                        <option id="5384" value="5384">Clinical Psychologist</option>
+                        <option id="118" value="118">Medical Genetics</option>
+                        <option id="119" value="119">Pediatric Allergy and Immunology</option>
+                        <option id="120" value="120">Pediatric Anesthesiology and Perioperative Services</option>
+                        <option id="121" value="121">Pediatric Cardiac Surgery</option>
+                        <option id="122" value="122">Pediatric Cardiology</option>
+                        <option id="123" value="123">Pediatric Critical Care</option>
+                        <option id="124" value="124">Pediatric Dermatology</option>
+                        <option id="125" value="125">Pediatric Diabetes, Endocrinology and Metabolism</option>
+                        <option id="126" value="126">Pediatric Emergency Medicine</option>
+                        <option id="127" value="127">Pediatric Gastroenterology, Hepatology and Nutrition</option>
+                        <option id="128" value="128">Pediatric General Pediatrics</option>
+                        <option id="129" value="129">Pediatric Hematology / Oncology</option>
+                        <option id="130" value="130">Pediatric Hospitalist Program</option>
+                        <option id="131" value="131">Pediatric Infectious Diseases</option>
+                        <option id="132" value="132">Pediatric Neonatology</option>
+                        <option id="133" value="133">Pediatric Nephrology and Hypertension</option>
+                        <option id="134" value="134">Pediatric Neurology</option>
+                        <option id="135" value="135">Pediatric Neurosurgery</option>
+                        <option id="136" value="136">Pediatric Ophthalmology</option>
+                        <option id="137" value="137">Pediatric Oral and Maxillofacial Surgery</option>
+                        <option id="138" value="138">Pediatric Orthopaedics</option>
+                        <option id="139" value="139">Pediatric Otolaryngology</option>
+                        <option id="7452" value="7452">Pediatric Palliative Care</option>
+                        <option id="140" value="140">Pediatric Pathology</option>
+                        <option id="141" value="141">Pediatric Plastic Surgery</option>
+                        <option id="142" value="142">Pediatric Primary Care</option>
+                        <option id="143" value="143">Pediatric Pulmonary Medicine</option>
+                        <option id="144" value="144">Pediatric Radiology</option>
+                        <option id="7451" value="7451">Pediatric Rheumatology</option>
+                        <option id="145" value="145">Pediatric Surgery</option>
+                        <option id="146" value="146">Pediatric Transplant</option>
+                        <option id="147" value="147">Pediatric Trauma and Burn</option>
+                        <option id="148" value="148">Pediatric Urology</option>
+                      </optgroup>
+                      <option id="5408" value="5408">Physical Medicine and Rehabilitation</option>
+                      <option id="72" value="72">Preventive Medicine</option>
+                      <option id="73" value="73">Primary Care</option>
+                      <optgroup label="Psychiatry">
+                        <option id="74" value="74">All Psychiatry</option>
+                        <option id="75" value="75">Addiction Medicine</option>
+                        <option id="76" value="76">Adult Psychiatry</option>
+                        <option id="77" value="77">Child and Adolescent Psychiatry</option>
+                      </optgroup>
+                      <option id="78" value="78">Pulmonary and Critical Care Medicine</option>
+                      <optgroup label="Radiology">
+                        <option id="79" value="79">All Radiology</option>
+                        <option id="149" value="149">Breast Imaging</option>
+                        <option id="5396" value="5396">Nuclear Medicine</option>
+                      </optgroup>
+                      <option id="80" value="80">Rheumatology</option>
+                      <option id="5410" value="5410">Sleep Medicine</option>
+                      <option id="81" value="81">Sports Medicine</option>
+                      <optgroup label="Surgery">
+                        <option id="82" value="82">All Surgery</option>
+                        <option id="83" value="83">Bariatric/Weight Loss Surgery</option>
+                        <option id="84" value="84">Colon and Rectal Surgery</option>
+                        <option id="85" value="85">Cosmetic Plastic Surgery</option>
+                        <option id="86" value="86">Dermatology Surgery</option>
+                        <option id="87" value="87">Endocrine Surgery</option>
+                        <option id="88" value="88">Gastroenterology Surgery</option>
+                        <option id="89" value="89">General Surgery</option>
+                        <option id="5385" value="5385">Hand Surgery</option>
+                        <option id="90" value="90">Hepatobiliary and Liver Surgery</option>
+                        <option id="91" value="91">Kidney and Pancreas Surgery</option>
+                        <option id="92" value="92">Nephrology Surgery</option>
+                        <option id="93" value="93">Neurological Surgery</option>
+                        <option id="94" value="94">Ophthalmology Surgery</option>
+                        <option id="95" value="95">Oral and Maxillofacial Surgery</option>
+                        <option id="96" value="96">Orthodontics Surgery</option>
+                        <option id="97" value="97">Orthopaedic Surgery</option>
+                        <option id="98" value="98">Otolaryngology Surgery</option>
+                        <option id="99" value="99">Plastic and Reconstructive Surgery</option>
+                        <option id="100" value="100">Pulmonary Surgery</option>
+                        <option id="101" value="101">Thoracic Surgery</option>
+                        <option id="102" value="102">Trauma Surgery</option>
+                        <option id="103" value="103">Urologic Surgery</option>
+                      </optgroup>
+                      <option id="104" value="104">Toxicology</option>
+                      <optgroup label="Transplant">
+                        <option id="105" value="105">All Transplant</option>
+                        <option id="106" value="106">Bone Marrow Transplant</option>
+                        <option id="107" value="107">Heart Transplant</option>
+                        <option id="108" value="108">Kidney and Pancreas Transplant</option>
+                        <option id="5430" value="5430">Kidney Transplant</option>
+                        <option id="109" value="109">Liver Transplant</option>
+                        <option id="110" value="110">Lung Transplant</option>
+                        <option id="111" value="111">Stem Cell Transplant</option>
+                      </optgroup>
+                      <option id="112" value="112">Urology</option>
+                    </select>
+                    <br>
+                    <select name="selectedlocationitem" id="speedLocs" class="form-control" style="color: white;">
+                      <option>All Locations</option>
+                      <optgroup label="Brentwood, TN">
+                        <option id="22216|22227|50211|" value="Brentwood, TN">All Brentwood, TN</option>
+                        <option id="50211|">Shoppes at Brentwood</option>
+                        <option id="22216|">Vanderbilt Brentwood Primary Care</option>
+                        <option id="22227|">Vanderbilt Medical Group Brentwood</option>
+                      </optgroup>
+                      <optgroup label="Byrdstown, TN">
+                        <option id="30928|">Vanderbilt Heart Byrdstown</option>
+                      </optgroup>
+                      <optgroup label="Clarksville, TN">
+                        <option id="21807|">Gateway - Vanderbilt Cancer Treatment Center</option>
+                      </optgroup>
+                      <optgroup label="Columbia, TN">
+                        <option id="33190|30934|" value="Columbia, TN">All Columbia, TN</option>
+                        <option id="30934|">Vanderbilt Heart Columbia</option>
+                      </optgroup>
+                      <optgroup label="Crossville, TN">
+                        <option id="30935|">Vanderbilt Heart Crossville</option>
+                      </optgroup>
+                      <optgroup label="Franklin, TN">
+                        <option id="22154|22191|31877|22226|30936|19858|22228|22231|22232|22233|22234|22241|22766|32104|32899|32905|21924|32099|22220|22221|37855|" value="Franklin, TN">All Franklin, TN</option>
+                        <option id="22154|">Vanderbilt Bone and Joint</option>
+                        <option id="37855|">Vanderbilt Center for Women's Health at Cool Springs</option>
+                        <option id="31877|">Vanderbilt Dermatology Franklin - Walk In Clinic</option>
+                        <option id="22226|">Vanderbilt Eye Institute Franklin</option>
+                        <option id="30936|">Vanderbilt Heart Franklin</option>
+                        <option id="22231|">Vanderbilt Medical Group Franklin - Adult Primary Care</option>
+                        <option id="22241|">Vanderbilt Medical Group Franklin - Cardiology</option>
+                        <option id="32899|">Vanderbilt Medical Group Franklin - Dermatology</option>
+                        <option id="32104|">Vanderbilt Medical Group Franklin - Ear, Nose and Throat</option>
+                        <option id="22233|">Vanderbilt Medical Group Franklin - Family Medicine</option>
+                        <option id="22766|">Vanderbilt Medical Group Franklin - Gastroenterology</option>
+                        <option id="22234|">Vanderbilt Medical Group Franklin - General Surgery</option>
+                        <option id="32905|">Vanderbilt Medical Group Franklin - Neurosurgery</option>
+                        <option id="22228|">Vanderbilt Medical Group Franklin - Rheumatology</option>
+                        <option id="22232|">Vanderbilt Medical Group Franklin - Walk-In Clinic</option>
+                        <option id="21924|">Vanderbilt Medical Group Westhaven</option>
+                        <option id="22191|">Vanderbilt Neurosurgery at Cool Springs</option>
+                        <option id="32099|">Vanderbilt Orthopaedics Cool Springs</option>
+                        <option id="22221|">Vanderbilt-Ingram Cancer Center Cool Springs</option>
+                        <option id="22220|">Vanderbilt-Ingram Cancer Center Franklin</option>
+                      </optgroup>
+                      <optgroup label="Franklin, KY">
+                        <option id="31659|">Vanderbilt Heart Franklin, Kentucky</option>
+                      </optgroup>
+                      <optgroup label="Hartford, KY">
+                        <option id="31661|">Vanderbilt Heart Hartford, Kentucky</option>
+                      </optgroup>
+                      <optgroup label="Johnson City, TN">
+                        <option id="30958|">Vanderbilt Heart Johnson City</option>
+                      </optgroup>
+                      <optgroup label="Knoxville, TN">
+                        <option id="30960|">Vanderbilt Heart Knoxville</option>
+                      </optgroup>
+                      <optgroup label="Lawrenceburg, TN">
+                        <option id="30965|41496|" value="Lawrenceburg, TN">All Lawrenceburg, TN</option>
+                        <option id="41496|">Vanderbilt Eye Institute - Remke Clinic</option>
+                        <option id="30965|">Vanderbilt Heart Lawrenceburg</option>
+                      </optgroup>
+                      <optgroup label="Lebanon, TN">
+                        <option id="28141|">Vanderbilt Heart Lebanon</option>
+                      </optgroup>
+                      <optgroup label="Livingston, TN">
+                        <option id="30968|">Vanderbilt Heart Livingston</option>
+                      </optgroup>
+                      <optgroup label="Murfreesboro, TN">
+                        <option id="30970|">Vanderbilt Heart Murfreesboro</option>
+                      </optgroup>
+                      <optgroup label="Nashville, TN">
+                        <option id="20863|30962|31716|29569|32097|19982|21710|21957|22205|22207|22209|22211|28495|31977|22771|19943|22029|19218|19940|20132|21326|21588|21589|21812|21813|25282|27114|27116|30438|33203|33354|21989|30955|26996|19287|21050|21579|22193|22199|22203|22204|30170|32623|19948|22271|30854|28467|22777|24230|32479|22236|19951|22235|24589|25162|22148|29830|30587|32156|22239|20273|28337|22185|22189|31079|22084|22091|22121|22125|22218|22219|20387|22187|31084|31879|20130|21672|22776|19867|28470|19771|25488|21575|31082|21622|22870|22978|22991|22993|30717|31783|21722|19341|22587|31665|20844|22158|22159|22190|26728|23174|21652|22741|21611|21616|22222|19949|22223|25906|22767|28475|22992|31867|31898|32611|19857|29918|20856|23841|26727|29135|31833|22251|22774|23312|32513|22995|22734|20962|20154|21657|21660|30635|30736|32443|25571|19869|20140|22999|23000|23001|23002|23003|23004|23005|23006|23007|23008|23009|23010|23011|23012|23013|23014|23015|23016|23017|27799|22317|22113|20346|22306|19441|22868|28590|19727|22984|21955|19274|21963|24591|22998|25908|20255|22302|30634|19865|22285|28551|19447|22407|20262|31282|23193|22213|29762|21542|23018|30164|30221|19438|21651|30419|31978|32102|32950|30854|19278|47743|" value="Nashville, TN">All Nashville, TN</option>
+                        <option id="30170|">Department of Hearing and Speech Sciences</option>
+                        <option id="22125|">Department of Plastic Surgery</option>
+                        <option id="31879|">Diabetes, Endocrinology and Metabolism</option>
+                        <option id="20863|">Hillsboro Medical Group</option>
+                        <option id="22219|">Surgical Weight Loss</option>
+                        <option id="19982|">Vanderbilt Adult Primary Care</option>
+                        <option id="22211|">Vanderbilt Adult Primary Care at One Hundred Oaks</option>
+                        <option id="21989|">Vanderbilt Asthma, Sinus And Allergy Program</option>
+                        <option id="19287|">Vanderbilt Bill Wilkerson Center</option>
+                        <option id="22204|">Vanderbilt Bill Wilkerson Center at Saint Thomas</option>
+                        <option id="22271|">Vanderbilt Breast Center</option>
+                        <option id="28467|">Vanderbilt Burn Center</option>
+                        <option id="22777|">Vanderbilt Center for Human Nutrition</option>
+                        <option id="24230|">Vanderbilt Center for Integrative Health</option>
+                        <option id="24589|">Vanderbilt Center for Surgical Weight Loss One Hundred Oaks</option>
+                        <option id="19278|">Vanderbilt Center for Women's Health at One Hundred Oaks</option>
+                        <option id="32156|">Vanderbilt Comprehensive Spine</option>
+                        <option id="20273|">Vanderbilt Dayani Center</option>
+                        <option id="28337|">Vanderbilt Dental</option>
+                        <option id="20387|">Vanderbilt Dermatology One Hundred Oaks</option>
+                        <option id="22187|">Vanderbilt Diabetes (Adult)</option>
+                        <option id="31084|">Vanderbilt Diabetes (Pediatric)</option>
+                        <option id="21672|">Vanderbilt Digestive Disease Center</option>
+                        <option id="21622|">Vanderbilt Eye Institute</option>
+                        <option id="47743|">Vanderbilt Eye Institute - Skyline</option>
+                        <option id="19341|">Vanderbilt Heart</option>
+                        <option id="20844|">Vanderbilt Hematology Clinic</option>
+                        <option id="22741|">Vanderbilt Hypertension Clinic</option>
+                        <option id="22776|">Vanderbilt IBD Center</option>
+                        <option id="33203|">Vanderbilt Interventional Pain Center at One Hundred Oaks</option>
+                        <option id="22767|">Vanderbilt Medical Group Green Hills</option>
+                        <option id="22774|">Vanderbilt Neurology One Hundred Oaks</option>
+                        <option id="22251|">Vanderbilt Neurology The Vanderbilt Clinic</option>
+                        <option id="22185|">Vanderbilt Neurosurgery at One Hundred Oaks</option>
+                        <option id="22189|">Vanderbilt Neurosurgery at Village at Vanderbilt</option>
+                        <option id="20154|">Vanderbilt Orthodontics</option>
+                        <option id="21657|">Vanderbilt Orthopaedics</option>
+                        <option id="25571|">Vanderbilt Outpatient Nutrition Clinic</option>
+                        <option id="22113|">Vanderbilt Plastic Surgery</option>
+                        <option id="22306|">Vanderbilt Preoperative Evaluation Clinic</option>
+                        <option id="19441|">Vanderbilt Psychiatric Hospital</option>
+                        <option id="19727|">Vanderbilt Psychiatry Clinic</option>
+                        <option id="22984|">Vanderbilt Pulmonary Medicine</option>
+                        <option id="22998|">Vanderbilt Rheumatology Clinic</option>
+                        <option id="20255|">Vanderbilt Sports Medicine</option>
+                        <option id="23018|">Vanderbilt Urology</option>
+                        <option id="30221|">Vanderbilt Voice Center</option>
+                        <option id="30419|">Vanderbilt-Ingram Cancer Center - The Vanderbilt Clinic</option>
+                      </optgroup>
+                      <optgroup label="Powderly, KY">
+                        <option id="31663|">Vanderbilt Heart Powderly, Kentucky</option>
+                      </optgroup>
+                      <optgroup label="Shelbyville, TN">
+                        <option id="31872|19854|22770|" value="Shelbyville, TN">All Shelbyville, TN</option>
+                        <option id="19854|">Vanderbilt Heart Shelbyville</option>
+                        <option id="22770|">Vanderbilt Medical Group Shelbyville</option>
+                      </optgroup>
+                      <optgroup label="Spring Hill, TN">
+                        <option id="31656|20857|50999|53141|57979|55730|47244|56464|55830|" value="Spring Hill, TN">All Spring Hill, TN</option>
+                        <option id="50999|">Vanderbilt Bone and Joint - Spring Hill Walk in Clinic</option>
+                        <option id="55830|">Vanderbilt Children's After Hours Clinic at Spring Hill</option>
+                        <option id="56464|">Vanderbilt Eye Institute</option>
+                        <option id="31656|">Vanderbilt Heart Spring Hill</option>
+                        <option id="20857|">Vanderbilt Medical Group Spring Hill</option>
+                        <option id="55730|">Vanderbilt Medical Group Spring Hill  - Rheumatology</option>
+                        <option id="47244|">Vanderbilt Medical Group Spring Hill - Walk-in Clinic</option>
+                        <option id="57979|">Vanderbilt Neurosciences</option>
+                        <option id="53141|">Vanderbilt-Ingram Cancer Center</option>
+                      </optgroup>
+                      <optgroup label="Springfield, TN">
+                        <option id="52821|54597|" value="Springfield, TN">All Springfield, TN</option>
+                        <option id="52821|">Vanderbilt Center for Women's Health at NorthCrest</option>
+                        <option id="54597|">Vanderbilt-Ingram Cancer Center at NorthCrest</option>
+                      </optgroup>
+                      <optgroup label="Tullahoma, TN">
+                        <option id="31658|41495|" value="Tullahoma, TN">All Tullahoma, TN</option>
+                        <option id="41495|">Vanderbilt Eye Institute</option>
+                        <option id="31658|">Vanderbilt Heart Tullahoma</option>
+                      </optgroup>
+                      <optgroup label="Winchester, TN">
+                        <option id="31465|">Vanderbilt Heart Winchester</option>
+                      </optgroup>
+                    </select>
+                  </form>
                   </div>
                   <!-- Show:
                   <select ng-model="query">

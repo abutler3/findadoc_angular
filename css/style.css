@@ -493,7 +493,8 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 18px;
+  width: 0;
+  height: 0;
 }
 /* Turn on single button up on top, and down on bottom */
 ::-webkit-scrollbar-button:start:decrement,
