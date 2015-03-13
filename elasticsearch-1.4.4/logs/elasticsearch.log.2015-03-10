@@ -1,0 +1,1 @@
+[2015-03-10 16:50:35,637][INFO ][monitor.jvm              ] [Doctor Spectrum] [gc][young][116291][143] duration [742ms], collections [1]/[1.9s], total [742ms]/[2s], memory [142.7mb]->[74.8mb]/[990.7mb], all_pools {[young] [68.3mb]->[485.3kb]/[266.2mb]}{[survivor] [141.8kb]->[51.5kb]/[33.2mb]}{[old] [74.2mb]->[74.3mb]/[691.2mb]}
