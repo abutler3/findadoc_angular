@@ -2,7 +2,7 @@
 <html ng-app='findADoc'>
   <head>
     <title>FindaDoc Demo</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/style.css" media="all" />
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="lib/ng-modal/ng-modal.css" media="all" />
@@ -12,6 +12,7 @@
     <script type="text/javascript" src="lib/angular/angular-route.js"></script>
     <script type="text/javascript" src="lib/angular/ui-utils-0.2.1/ui-utils.js"></script>
     <script type="text/javascript" src="lib/bindonce.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>
   </head>
   <body>
     <div class="site-wrapper">
@@ -61,7 +62,17 @@
             </modal-dialog>
             <modal-dialog show='modalShown' width='80%' height='90%' title='This is a modal' on-close='close()'>
               <div class="main">
-                <img src="http://pazzopinto.files.wordpress.com/2013/01/vb-logo1.gif">
+
+                <div class="tabbable tabs-left">
+                  <ul class="nav nav-tabs">
+                     <li ng-class="getTabClass(1)" ng-click="setActiveTab(1)"><a href="#findadoc" data-toggle="tab">Find A Doc</a></li>
+                     <li ng-class="getTabClass(2)" ng-click="setActiveTab(2)"><a href="#krames" data-toggle="tab">Krames</a></li>
+                     <li ng-class="getTabClass(3)" ng-click="setActiveTab(3)"><a href="#gsa" data-toggle="tab">GSA</a></li>
+                     <li ng-class="getTabClass(4)" ng-click="setActiveTab(4)"><a href="#locations" data-toggle="tab">Locations</a></li>
+                  </ul>
+                  <div class="tab-content">
+                    <div ng-class="getTabPaneClass(1)" id="findadoc" class="content">
+                        <img src="http://pazzopinto.files.wordpress.com/2013/01/vb-logo1.gif">
                 <!-- <p style="font-size: 46px; color: white; margin-top: 10px;">Doctors Found: <span style="font-size: 60px; color: white;">{{filtered.length}}</span></p> -->
                 <div class="search">
                   <h1>Find a Doctor</h1>
@@ -447,6 +458,45 @@
                     </div>
                   </li>
                 </ul>
+                     </div>
+
+                    <div ng-class="getTabPaneClass(2)" id="krames" class="content" ng-controller="KramesController">
+                      <a ng-href='{{link}}'>This is a link to {{link}}</a>
+                        <img src="http://pazzopinto.files.wordpress.com/2013/01/vb-logo1.gif">
+                        <!-- <p style="font-size: 46px; color: white; margin-top: 10px;">Doctors Found: <span style="font-size: 60px; color: white;">{{filtered.length}}</span></p> -->
+                        <div class="search">
+                          <h1>Health Topics</h1>
+                          <!-- <h3>Total Doctors: {{filtered.length }}</h3> -->
+                          <input ng-model="query" ng-model-options="{ debounce: 2000 }" placeholder="Search by first or last name or speciality (i.e. cancer or heart)" autofocus style="margin-bottom: 20px;"></input>
+                          <button class="btn btn-lg btn-default" ng-click="toggle = !toggle" style="color: black; margin-right: 20px;">Toggle!</button>
+                        </div>
+                        <!-- <ul class="doctorslist" ng-show="toggle">
+                          <li class="doctor cf" bindonce ng-repeat="item in doctors | unique: item.ID | orderBy:'ProviderName.LastName' | filter: query | limitTo: 6">
+                            <img ng-src="{{item.ImageUrl}}" alt="Photo of {{item.ProviderName.LastName}}" err-src="icon-main-doctor.jpg">
+                            <div class="info">
+                              <h2><a target="_blank" bo-href="http://www.vanderbilthealth.com/main/findadoc?LastName={{item.ProviderName.LastName}}&FirstName={{item.ProviderName.FirstName}}">{{item.ProviderName.FirstName}} {{item.ProviderName.LastName}}</a></h2>
+                              <div ng-if="item.OrganizationsList.ProviderOrganization.length > 0">
+                                <ul ng-repeat="ProviderOrganization in item.OrganizationsList.ProviderOrganization | limitTo: 1">
+                                  <li>{{ProviderOrganization.Name}}</li>
+                                </ul>
+                              </div>
+                                <p>{{item.OrganizationsList.ProviderOrganization.Name}}</p>
+                            </div>
+                          </li>
+                        </ul> -->
+                    </div>
+
+                    <div ng-class="getTabPaneClass(3)" id="gsa" class="content">
+                      {{tab3}}
+                    </div>
+
+                    <div ng-class="getTabPaneClass(4)" id="locations" class="content">
+                      {{tab4}}
+                    </div>
+
+                  </div>
+                </div>
+
               </div>
               <a ng-href='{{link}}'>This is a link to {{link}}</a>
               <p>Shown? {{modalShown}}</p>
@@ -468,7 +518,7 @@
 
     </div>
     <script type='text/javascript'>
-      app = angular.module('ngModalDemo', ['ngModal']);
+      app = angular.module('ngModalDemo', ['ngModal', 'ui.bootstrap']);
       app.config(function(ngModalDefaultsProvider) {
           return ngModalDefaultsProvider.set({
             closeButtonHtml: "<i class='fa fa-times'></i>"
@@ -480,6 +530,7 @@
           $scope.toggleModal = function() {
             $scope.modalShown = !$scope.modalShown;
           };
+
       });
     </script>
   </body>
