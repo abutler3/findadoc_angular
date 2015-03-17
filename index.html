@@ -467,11 +467,11 @@
                         <div class="search">
                           <h1>Health Topics</h1>
                           <!-- <h3>Total Doctors: {{filtered.length }}</h3> -->
-                          <input ng-model="query" ng-model-options="{ debounce: 2000 }" placeholder="Search by first or last name or speciality (i.e. cancer or heart)" autofocus style="margin-bottom: 20px;"></input>
+                          <input ng-model="krames-query" ng-model-options="{ debounce: 2000 }" placeholder="Search by first or last name or speciality (i.e. cancer or heart)" autofocus style="margin-bottom: 20px;"></input>
                           <button class="btn btn-lg btn-default" ng-click="toggle = !toggle" style="color: black; margin-right: 20px;">Toggle!</button>
                         </div>
-                        <!-- <ul class="doctorslist" ng-show="toggle">
-                          <li class="doctor cf" bindonce ng-repeat="item in doctors | unique: item.ID | orderBy:'ProviderName.LastName' | filter: query | limitTo: 6">
+                        <ul class="doctorslist" ng-show="toggle">
+                          <li class="doctor cf" bindonce ng-repeat="item in locations | unique: item.ID | orderBy:'ProviderName.LastName' | filter: query | limitTo: 6">
                             <img ng-src="{{item.ImageUrl}}" alt="Photo of {{item.ProviderName.LastName}}" err-src="icon-main-doctor.jpg">
                             <div class="info">
                               <h2><a target="_blank" bo-href="http://www.vanderbilthealth.com/main/findadoc?LastName={{item.ProviderName.LastName}}&FirstName={{item.ProviderName.FirstName}}">{{item.ProviderName.FirstName}} {{item.ProviderName.LastName}}</a></h2>
@@ -483,7 +483,7 @@
                                 <p>{{item.OrganizationsList.ProviderOrganization.Name}}</p>
                             </div>
                           </li>
-                        </ul> -->
+                        </ul>
                     </div>
 
                     <div ng-class="getTabPaneClass(3)" id="gsa" class="content">
